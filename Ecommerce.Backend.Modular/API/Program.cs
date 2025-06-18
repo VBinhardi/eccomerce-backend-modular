@@ -1,13 +1,23 @@
 using Ecommerce.Application.Interfaces;
 using Ecommerce.Application.Services;
+using Ecommerce.Infrastructure.Data;
 using Ecommerce.Infrastructure.Repositories;
 using Ecommerce.Stock.Infrastructure.Interfaces;
+using Ecommerce.Infrastructure;
+using Microsoft.EntityFrameworkCore;
+using System;
 
 internal class Program
 {
     private static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
+        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+
+        builder.Services.AddDbContext<EcommerceDbContext>(options =>
+            options.UseNpgsql(connectionString));
 
         // Add services to the container.
 
@@ -19,6 +29,7 @@ internal class Program
         //ALTERAR TUDO ISSO AQUI QUANDO TIRAR O MOCK
         builder.Services.AddSingleton<IOrderRepository, OrderRepository>();
         builder.Services.AddSingleton<IProductRepository, ProductRepository>();
+       
 
         var app = builder.Build();
 
