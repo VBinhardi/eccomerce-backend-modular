@@ -26,9 +26,8 @@ internal class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         builder.Services.AddScoped<IOrderService, OrderService>();
-        //ALTERAR TUDO ISSO AQUI QUANDO TIRAR O MOCK
-        builder.Services.AddSingleton<IOrderRepository, OrderRepository>();
-        builder.Services.AddSingleton<IProductRepository, ProductRepository>();
+        builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+        builder.Services.AddScoped<IProductRepository, ProductRepository>();
        
 
         var app = builder.Build();
