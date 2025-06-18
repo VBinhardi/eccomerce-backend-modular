@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS orders (
 
 -- Criação da tabela de itens de pedido
 CREATE TABLE IF NOT EXISTS order_items (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     order_id UUID NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
     product_id UUID NOT NULL,
     product_name TEXT NOT NULL,
