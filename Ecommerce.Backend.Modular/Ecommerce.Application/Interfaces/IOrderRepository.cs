@@ -1,16 +1,17 @@
 ﻿using Ecommerce.Application.DTOs;
+using Ecommerce.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ecommerce.Stock.Infrastructure.Interfaces
+namespace Ecommerce.Application.Interfaces
 {
     public interface IOrderRepository
     {
-        Task<Guid> AddAsync(CreateOrderDto dto);
-        Task<OrderDetailsDto?> GetByIdAsync(Guid id);
-        Task<List<OrderDetailsDto>> GetAllAsync();
+        Task<int> AddAsync(Order order);
+        Task<Order> GetByIdAsync(Guid id);
+        Task<List<Order>> GetAllAsync();
     }
 }

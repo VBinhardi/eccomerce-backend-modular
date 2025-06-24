@@ -1,5 +1,8 @@
 ﻿using Ecommerce.Application.DTOs;
-using Ecommerce.Stock.Infrastructure.Interfaces;
+using Ecommerce.Application.Interfaces;
+using Ecommerce.Domain.Entities;
+using Ecommerce.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,48 +13,30 @@ namespace Ecommerce.Infrastructure.Repositories
 {
     public class OrderRepository : IOrderRepository
     {
+        private readonly EcommerceDbContext _context;
+
         private readonly IProductRepository _productRepository;
-        public OrderRepository(IProductRepository productRepository)
+        public OrderRepository(IProductRepository productRepository, EcommerceDbContext context)
         {
             _productRepository = productRepository;
+            _context = context;
         }
 
-        public List<OrderDetailsDto> _mockDB = new List<OrderDetailsDto>();
-
-        public async Task<Guid> AddAsync(CreateOrderDto dto)
+        public async Task<int> AddAsync(Order order)
         {
-            var items = await Task.WhenAll(dto.Items.Select(async i =>
-            {
-                var product = await _productRepository.GetProductById(i.ProductId);
-
-                return new OrderItemDto
-                {
-                    ProductId = product.Id,
-                    ProductName = product.Name,
-                    Quantity = i.Quantity,
-                    UnitPrice = product.Price
-                };
-            }));
-
-            var order = new OrderDetailsDto
-            {
-                CreatedAt = DateTime.Now,
-                Id = Guid.NewGuid(),
-                Items = items.ToList(),
-            };
-
-            _mockDB.Add(order);
-            return order.Id;
+            await _context.Orders.AddAsync(order);
+            return await _context.SaveChangesAsync();
         }
 
-        public async Task<List<OrderDetailsDto>> GetAllAsync()
+        //AJUSTAR OS TIPOS DE RETORNO E TRATAR PRA UM DTO PRO CONTROLLER RECEBER ELES
+        public async Task<List<Order>> GetAllAsync()
         {
-            return _mockDB;
+            return await _context.Orders.ToListAsync();
         }
 
-        public async Task<OrderDetailsDto?> GetByIdAsync(Guid id)
+        public async Task<Order> GetByIdAsync(Guid id)
         {
-            return _mockDB.FirstOrDefault(i => i.Id == id);
+            return await _context.Orders.FirstOrDefaultAsync(x=>x.Id == id);
         }
     }
 }

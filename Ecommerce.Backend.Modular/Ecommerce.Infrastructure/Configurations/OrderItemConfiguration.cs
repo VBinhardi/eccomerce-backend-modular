@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Infrastructure.Configurations
 {
-    public class OrderItemConfiguration : IEntityTypeConfiguration<OrderItem>
+    public class ProductsConfiguration : IEntityTypeConfiguration<OrderItem>
     {
         public void Configure(EntityTypeBuilder<OrderItem> builder)
         {

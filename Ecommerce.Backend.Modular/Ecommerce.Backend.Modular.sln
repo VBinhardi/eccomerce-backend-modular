@@ -29,9 +29,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{D42B8E
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "init", "init", "{0D191880-8D1D-431E-9916-3B935BA7AC6C}"
-	ProjectSection(SolutionItems) = preProject
-		init.sql = init.sql
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -2,7 +2,6 @@ using Ecommerce.Application.Interfaces;
 using Ecommerce.Application.Services;
 using Ecommerce.Infrastructure.Data;
 using Ecommerce.Infrastructure.Repositories;
-using Ecommerce.Stock.Infrastructure.Interfaces;
 using Ecommerce.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -26,9 +25,9 @@ internal class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         builder.Services.AddScoped<IOrderService, OrderService>();
+        builder.Services.AddScoped<IProductService, ProductService>();
         builder.Services.AddScoped<IOrderRepository, OrderRepository>();
         builder.Services.AddScoped<IProductRepository, ProductRepository>();
-       
 
         var app = builder.Build();
 

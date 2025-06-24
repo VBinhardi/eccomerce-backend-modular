@@ -1,6 +1,13 @@
 -- Habilita extensão para UUID se necessário
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
+-- Criação da tabela de produtos
+CREATE TABLE IF NOT EXISTS products (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name TEXT NOT NULL,
+    price INTEGER NOT NULL
+);
+
 -- Criação da tabela de pedidos
 CREATE TABLE IF NOT EXISTS orders (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -17,10 +24,7 @@ CREATE TABLE IF NOT EXISTS order_items (
     unit_price INTEGER NOT NULL
 );
 
--- Exemplo de inserção (opcional - seed inicial)
-INSERT INTO orders (id, created_at) VALUES
-    ('11111111-1111-1111-1111-111111111111', NOW());
-
-INSERT INTO order_items (order_id, product_id, product_name, quantity, unit_price) VALUES
-    ('11111111-1111-1111-1111-111111111111', gen_random_uuid(), 'Produto A', 2, 1500),
-    ('11111111-1111-1111-1111-111111111111', gen_random_uuid(), 'Produto B', 1, 3000);
+-- Seed de produtos
+INSERT INTO products (id, name, price) VALUES
+    ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'Notebook Gamer XYZ', 10000.90),
+    ('bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', 'Mouse RGB Pro', 1000.90);

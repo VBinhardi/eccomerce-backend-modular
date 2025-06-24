@@ -12,6 +12,7 @@ namespace Ecommerce.Infrastructure.Data
     {
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItem { get; set; }
+        public DbSet<Product> Products { get; set; }
 
         public EcommerceDbContext(DbContextOptions<EcommerceDbContext> options) : base(options) { }
 

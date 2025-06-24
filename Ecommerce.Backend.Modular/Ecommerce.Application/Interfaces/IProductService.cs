@@ -9,6 +9,6 @@ namespace Ecommerce.Application.Interfaces
 {
     public interface IProductService
     {
-        Task<ProductDto> GetProductById(Guid id);
+        Task<ProductDto> GetProductByIdAsync(Guid id);
     }
 }

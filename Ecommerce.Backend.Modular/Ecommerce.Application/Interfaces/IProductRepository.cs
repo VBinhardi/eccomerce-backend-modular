@@ -1,9 +1,10 @@
 ﻿using Ecommerce.Application.DTOs;
+using Ecommerce.Domain.Entities;
 
 namespace Ecommerce.Infrastructure.Repositories
 {
     public interface IProductRepository
     {
-        Task<ProductDto> GetProductById(Guid id);
+        Task<Product> GetProductByIdAsync(Guid id);
     }
 }
