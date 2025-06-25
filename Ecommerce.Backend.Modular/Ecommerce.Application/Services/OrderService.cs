@@ -42,7 +42,7 @@ namespace Ecommerce.Application.Services
 
             var order = new Order
             {
-                CreatedAt = DateTime.Now,
+                CreatedAt = DateTime.UtcNow,
                 Id = orderId,
                 Items = Items
             };

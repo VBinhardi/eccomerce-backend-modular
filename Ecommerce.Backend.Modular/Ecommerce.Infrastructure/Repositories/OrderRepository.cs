@@ -31,12 +31,16 @@ namespace Ecommerce.Infrastructure.Repositories
         //AJUSTAR OS TIPOS DE RETORNO E TRATAR PRA UM DTO PRO CONTROLLER RECEBER ELES
         public async Task<List<Order>> GetAllAsync()
         {
-            return await _context.Orders.ToListAsync();
+            return await _context.Orders
+                .Include(i=>i.Items)
+                .ToListAsync();
         }
 
         public async Task<Order> GetByIdAsync(Guid id)
         {
-            return await _context.Orders.FirstOrDefaultAsync(x=>x.Id == id);
+            return await _context.Orders
+                .Include(i=>i.Items).
+                FirstOrDefaultAsync(x=>x.Id == id);
         }
     }
 }

@@ -15,11 +15,11 @@ namespace Ecommerce.Infrastructure.Configurations
         {
             builder.ToTable("products");
 
-            builder.HasKey(x => x.Id);
+            builder.HasKey(x => x.Id).HasName("id");
 
-            builder.Property(x => x.ProductName).HasColumnName("name").IsRequired();
+            builder.Property(x => x.Name).HasColumnName("name").IsRequired();
 
-            builder.Property(x => x.UnitPrice).HasColumnName("price").IsRequired();
+            builder.Property(x => x.Price).HasColumnName("price").IsRequired();
         }
     }
 }

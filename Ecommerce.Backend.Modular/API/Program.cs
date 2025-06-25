@@ -16,7 +16,8 @@ internal class Program
 
 
         builder.Services.AddDbContext<EcommerceDbContext>(options =>
-            options.UseNpgsql(connectionString));
+            options.UseNpgsql(connectionString)
+            .UseSnakeCaseNamingConvention());
 
         // Add services to the container.
 

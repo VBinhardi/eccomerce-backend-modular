@@ -15,7 +15,7 @@ services:
   api:
     build:
       context: .
-      dockerfile: Ecommerce.API/Dockerfile
+      dockerfile: Dockerfile
     container_name: ecommerce_api
     depends_on:
       - postgres
@@ -24,8 +24,8 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=ecommerce_db;Username=ecommerce_user;Password=ecommerce_pass"
-    volumes:
-      - ./Ecommerce.API:/app
+#    volumes:
+#      - ./API:/app
 
 volumes:
   postgres_data:

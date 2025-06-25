@@ -15,7 +15,7 @@ namespace Ecommerce.Infrastructure.Configurations
         {
             builder.ToTable("order_items");
 
-            builder.HasKey(x => x.Id);
+            builder.HasKey(x => x.Id).HasName("id");
 
             builder.Property(x => x.OrderId).HasColumnName("order_id").IsRequired();
 
