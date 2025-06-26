@@ -1,5 +1,7 @@
 ﻿using Ecommerce.Application.DTOs;
+using Ecommerce.Application.DTOs.Events;
 using Ecommerce.Application.Interfaces;
+using Ecommerce.Application.Interfaces.Messaging;
 using Ecommerce.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -13,10 +15,12 @@ namespace Ecommerce.Application.Services
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IProductService _productService;
-        public OrderService(IOrderRepository orderRepository, IProductService productService)
+        private readonly IEventPublisher _eventPublisher;
+        public OrderService(IOrderRepository orderRepository, IProductService productService, IEventPublisher publisher)
         {
             _orderRepository = orderRepository;
             _productService = productService;
+            _eventPublisher = publisher;
         }
 
 
@@ -49,6 +53,16 @@ namespace Ecommerce.Application.Services
 
             await _orderRepository.AddAsync(order);
 
+            var eventDto = new OrderCreated { Id = orderId , Items = order.Items.Select(i =>
+            {
+                return new ProductQuantityDto
+                {
+                    Quantity = i.Quantity,
+                    Id = i.Id
+                };
+            }).ToList()};
+
+            await _eventPublisher.PublishAsync(eventDto);
             return orderId;
         }
 
@@ -69,7 +83,7 @@ namespace Ecommerce.Application.Services
                         UnitPrice = item.UnitPrice,
                     }).ToList(),
                 };
-
+                 
             }).ToList();
         }
 

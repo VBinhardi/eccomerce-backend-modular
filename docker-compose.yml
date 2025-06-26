@@ -6,15 +6,16 @@ services:
       POSTGRES_USER: ecommerce_user
       POSTGRES_PASSWORD: ecommerce_pass
       POSTGRES_DB: ecommerce_db
+
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./docker/init:/docker-entrypoint-initdb.d
+      - ./Ecommerce.Backend.Modular/docker/init:/docker-entrypoint-initdb.d
 
   api:
     build:
-      context: .
+      context: ./Ecommerce.Backend.Modular
       dockerfile: Dockerfile
     container_name: ecommerce_api
     depends_on:
@@ -24,8 +25,20 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=ecommerce_db;Username=ecommerce_user;Password=ecommerce_pass"
+      RABBITMQ__HOST: rabbitmq
+      RABBITMQ__DEFAULT_USER: ecommerce_userRMQ
+      RABBITMQ__DEFAULT_PASS: ecommerce_passRMQ
 #    volumes:
 #      - ./API:/app
-
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672" 
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: ecommerce_userRMQ
+      RABBITMQ_DEFAULT_PASS: ecommerce_passRMQ
+    
+    
 volumes:
   postgres_data:

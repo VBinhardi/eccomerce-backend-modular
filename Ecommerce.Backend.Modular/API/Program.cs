@@ -5,6 +5,8 @@ using Ecommerce.Infrastructure.Repositories;
 using Ecommerce.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using System;
+using Ecommerce.Infrastructure.Messaging;
+using Ecommerce.Application.Interfaces.Messaging;
 
 internal class Program
 {
@@ -29,6 +31,7 @@ internal class Program
         builder.Services.AddScoped<IProductService, ProductService>();
         builder.Services.AddScoped<IOrderRepository, OrderRepository>();
         builder.Services.AddScoped<IProductRepository, ProductRepository>();
+        builder.Services.AddSingleton<IEventPublisher, RabbitMqPublisher>();
 
         var app = builder.Build();
 
